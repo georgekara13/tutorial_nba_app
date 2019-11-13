@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
-
 import style from './header.module.css' //CSS MODULES SHOULD FOLLOW THIS NAME CONVENTION <NAME>.module.css
 
-const Header = () => {
+//components
+import SideNavigation from './SideNav/sidenav'
+
+const Header = (props) => {
 
   const navBars = () => (
     <div className={style.bars}>
-      <FontAwesome name="bars"/>
+      <FontAwesome name="bars" onClick={props.onOpenNav}/>
     </div>
   )
 
@@ -20,6 +22,7 @@ const Header = () => {
 
   return(
     <header className={style.header}>
+      <SideNavigation {...props}/>
       <div className={style.headeropt}>
         {navBars()}
         {logo()}
