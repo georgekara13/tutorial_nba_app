@@ -2,6 +2,7 @@ import React from 'react'
 
 //components
 import NewsSlider from '../Widgets/NewsSlider/slider'
+import NewsList from '../Widgets/NewsList/newslist'
 
 //optionally pass settings to slider component
 const Home = () => (
@@ -10,6 +11,7 @@ const Home = () => (
     settings={{
       dots: false
     }}/>
+    <NewsList type='card' loadmore={true} start={3} amount={3}/>
   </div>
 )
 

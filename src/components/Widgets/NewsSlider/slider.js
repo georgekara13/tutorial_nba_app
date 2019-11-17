@@ -3,6 +3,7 @@ import axios from 'axios'
 
 //components
 import SliderTemplates from './slidertemplates'
+import { DB_URL } from '../../../helperfunctions'
 
 class NewsSlider extends Component {
 
@@ -23,7 +24,7 @@ class NewsSlider extends Component {
     data received from async axios request, as it's setting the state.
     Remember on setState = rerender view
     */
-    axios.get(`http://localhost:3004/articles?_start=${this.props.start}&_end=${this.props.end}`) //fetch first 3 results
+    axios.get(`${DB_URL}articles?_start=${this.props.start}&_end=${this.props.end}`) //fetch first 3 results
          .then( response => {
            this.setState({
              news: response.data
