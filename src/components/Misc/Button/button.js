@@ -11,6 +11,11 @@ const Button = (props) => {
         <div onClick={props.loadMore} className={style.blue_btn}>{props.content}</div>
       )
       break
+    case 'linkto':
+      template = (
+        <Link to={props.linkTo} className={style.blue_btn}>{props.content}</Link>
+      )
+      break
     default:
       template = null
   }
