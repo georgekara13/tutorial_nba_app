@@ -9,7 +9,9 @@ const CardInfo = (props) => {
       return team.id === teamid
     })
 
-    return data.name
+    if ( data ){
+      return data.name
+    }
   }
 
   return (
