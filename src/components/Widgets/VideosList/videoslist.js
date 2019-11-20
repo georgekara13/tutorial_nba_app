@@ -7,6 +7,7 @@ import { DB_URL } from '../../../helperfunctions'
 import Button from '../../Misc/Button/button'
 import VideoCard from './videocard'
 
+/*memory leak how to: follow comments*/
 class VideosList extends Component {
 
   state = {
@@ -22,6 +23,8 @@ class VideosList extends Component {
                    : null
   }
 
+  /*2. before component did mount lifecycle runs,
+  this will run and will pass an empty state.teams array as props to videocard component*/
   showVideos = (type) => {
     let template = null
 
@@ -70,6 +73,7 @@ class VideosList extends Component {
                     : <Button type="linkto" content="More Videos" linkTo="/videos" />
   }
 
+  //1.This will run first, before lifecycle. Start of memory leak
   render() {
     return (
       <div className={style.videoslist_wrapper}>

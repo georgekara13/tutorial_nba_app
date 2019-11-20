@@ -6,6 +6,8 @@ import style from './videoslist.module.css'
 import CardInfo from '../../Misc/CardInfo/cardinfo'
 
 const VideoCard = (props) => {
+  /*3. the videocard component consumes an empty prop teams array(see 1,2 comments in videoslist component)
+  and passes it to cardinfo component*/
   return props.data.map((item,i) => (
       <Link to={`/videos/${item.id}`} key={i}>
         <div className={style.videolistitem_wrapper}>
