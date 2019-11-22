@@ -6,7 +6,6 @@ import style from '../../articles.module.css'
 
 //components
 import Header from './header'
-import Body from './body'
 
 class NewsArticles extends Component {
 
@@ -37,7 +36,16 @@ class NewsArticles extends Component {
     return (
       <div className={style.articlewrapper}>
         <Header teamData={team[0]} date={article.date} author={article.author}/>
-        <Body />
+
+        <div className={style.article_body}>
+          <h1>{article.title}</h1>
+          <div className={style.article_image}
+               style={{
+                 background: `url('/images/articles/${article.image}')`
+               }}
+          ></div>
+          <div className={style.article_text}>{article.body}</div>
+        </div>
       </div>
     );
   }
