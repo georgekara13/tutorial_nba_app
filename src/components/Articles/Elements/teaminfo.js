@@ -9,7 +9,7 @@ const teamInfo = (props) => (
          }}
     >
     </div>
-    <div ClassName={style.right}>
+    <div className={style.right}>
       <div>
         <span>{props.team.city} {props.team.name}</span>
       </div>
