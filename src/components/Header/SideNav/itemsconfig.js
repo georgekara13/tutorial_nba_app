@@ -11,7 +11,7 @@ const Items = [
     icon: 'file-alt',
     type: 'option', //TODO pass css class from here
     text: 'News',
-    link: '/news'
+    link: '/articles'
   },
   {
     icon: 'film',
