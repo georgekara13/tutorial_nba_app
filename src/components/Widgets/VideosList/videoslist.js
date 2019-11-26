@@ -69,7 +69,7 @@ class VideosList extends Component {
   }
 
   showButton = (loadmore) => {
-    return loadmore ? <Button type="loadmore" loadmore={() => this.loadMore() } content="Load More videos"/>
+    return loadmore ? <Button type="loadmore" loadMore={() => this.loadMore() } content="Load More videos"/>
                     : <Button type="linkto" content="More Videos" linkTo="/videos" />
   }
 

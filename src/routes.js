@@ -4,9 +4,10 @@ import { Route, Switch } from 'react-router-dom'
 //components
 import Home from './components/Home/home'
 import Layout from './hoc/Layout/layout'
-import NewsArticle from './components/Articles/News/Post/index';
+import NewsArticle from './components/Articles/News/Post/index'
 import VideoArticle from './components/Articles/Videos/Video/index'
 import NewsView from './components/Articles/News/newsview'
+import VideoView from './components/Articles/Videos/videoview.js'
 
 class Routes extends Component {
 
@@ -18,6 +19,7 @@ class Routes extends Component {
           <Route path="/articles/:id" exact component={NewsArticle} />
           <Route path="/articles" exact component={NewsView} />
           <Route path="/videos/:id" exact component={VideoArticle} />
+          <Route path="/videos" exact component={VideoView} />
         </Switch>
       </Layout>
     )
