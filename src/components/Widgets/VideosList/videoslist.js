@@ -74,6 +74,7 @@ class VideosList extends Component {
   }
 
   //1.This will run first, before lifecycle. Start of memory leak
+  //TODO Refactor to transitiongroup - check newslist.js
   render() {
     return (
       <div className={style.videoslist_wrapper}>

@@ -72,6 +72,7 @@ class NewsList extends Component {
           </CSSTransition>
         ))
         break
+        //TODO fix css
         case ('newsview'):
           template = this.state.items.map( (item, i) => (
             <CSSTransition
