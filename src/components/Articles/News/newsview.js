@@ -19,4 +19,5 @@ const NewsView = () => (
   </div>
 )
 
+//TODO add back to .. button => misc component
 export default NewsView
