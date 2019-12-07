@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { firebaseArticles, firebaseLoopContent } from '../../../firebase/firebase'
 
 //components
 import SliderTemplates from './slidertemplates'
-import { DB_URL } from '../../../helperfunctions'
 
 class NewsSlider extends Component {
 
@@ -24,12 +23,13 @@ class NewsSlider extends Component {
     data received from async axios request, as it's setting the state.
     Remember on setState = rerender view
     */
-    axios.get(`${DB_URL}articles?_start=${this.props.start}&_end=${this.props.end}`) //fetch first 3 results
-         .then( response => {
-           this.setState({
-             news: response.data
-           })
-         })
+    firebaseArticles.limitToFirst(3).once('value')
+                    .then((snapshot) => {
+                      const news = firebaseLoopContent(snapshot)
+                      this.setState({
+                        news
+                      })
+                    })
   }
 
   render() {
