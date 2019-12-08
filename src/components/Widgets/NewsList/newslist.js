@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { Link } from 'react-router-dom'
-import { DB_URL } from '../../../helperfunctions'
 import style from './newslist.module.css'
-import axios from 'axios'
+import { firebaseTeams, firebaseArticles, firebaseLoopContent } from '../../../firebase/firebase'
 
 //component
 import Button from '../../Misc/Button/button'
@@ -25,27 +24,33 @@ class NewsList extends Component {
 
   loadMore = () => {
     const end = this.state.end + this.state.amount
-    this.request(this.state.end, end)
+    this.request(this.state.end + 1, end)
   }
 
   request = (start, end) => {
     if ( !this.state.teams.length ){
-      axios.get(`${DB_URL}teams`)
-           .then( response => {
-             this.setState({
-               teams: response.data
-             })
-           })
+      firebaseTeams.once('value')
+      .then((snapshot) => {
+        const teams = firebaseLoopContent(snapshot)
+        this.setState({
+          teams
+        })
+      })
     }
 
-    axios.get(`${DB_URL}articles?_start=${start}&_end=${end}`)
-         .then( response => {
-           this.setState({
-             items: [...this.state.items,...response.data],
-             start,
-             end
-           })
-         })
+    firebaseArticles.orderByChild("id").startAt(start).endAt(end).once('value')
+    .then((snapshot) => {
+      const articles = firebaseLoopContent(snapshot)
+      this.setState({
+        items: [...this.state.items,...articles],
+        start,
+        end
+      })
+    })
+    .catch( (e) => {
+      console.log(e)
+    })
+
   }
 
   renderNews = (type) => {

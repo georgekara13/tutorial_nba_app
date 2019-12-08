@@ -1,5 +1,7 @@
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
+import Moment from 'moment'
+
 import style from './cardinfo.module.css'
 
 const CardInfo = (props) => {
@@ -10,7 +12,7 @@ const CardInfo = (props) => {
   We don't care on what's happening with the first render, prior to the didmount lifecycle anyway*/
   const getTeamName = (teams,teamid) => {
     let data = teams.find((team) => {
-      return team.id === teamid
+      return team.teamId === teamid
     })
 
     if ( data ){
@@ -18,12 +20,16 @@ const CardInfo = (props) => {
     }
   }
 
+  const formatDate = (date) => {
+    return Moment(date).format(' MM/DD/YYYY')
+  }
+
   return (
     <div className={style.cardinfo}>
       <span className={style.teamname}>{getTeamName(props.teams, props.teamid)}</span>
       <span className={style.date}>
         <FontAwesome name="clock" />
-        {props.date}
+        {formatDate(props.date)}
       </span>
     </div>
   )
