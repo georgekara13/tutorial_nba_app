@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-import { DB_URL } from '../../../../helperfunctions'
 import style from '../../articles.module.css'
-
+import { firebaseDB, firebaseLoopContent, firebaseTeams } from '../../../../firebase/firebase'
 
 //components
 import Header from './header'
@@ -15,18 +13,20 @@ class NewsArticles extends Component {
   }
 
   componentDidMount(){
-    axios.get(`${DB_URL}articles?id=${this.props.match.params.id}`)
-         .then( response => {
-           let article = response.data[0]
-
-           axios.get(`${DB_URL}teams?id=${article.team}`)
-                .then ( response => {
-                  this.setState({
-                    article,
-                    team: response.data
-                  })
-                })
-         })
+    firebaseDB.ref(`articles/${this.props.match.params.id}`).once('value')
+    .then((snapshot) => {
+      let article = snapshot.val()
+      //order team entries by id in team snapshot
+      // and then find matching id entry from article snapshot
+      firebaseTeams.orderByChild('teamId').equalTo(article.team).once('value')
+      .then((snapshot) => {
+        const team = firebaseLoopContent(snapshot)
+        this.setState({
+          article,
+          team
+        })
+      })
+    })
   }
 
   render() {
