@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import style from './signin.module.css'
 import SignInTemplate from './signintemplate.json'
+import { firebase } from '../../firebase/firebase'
 
 import FormFields from '../Widgets/FormFields/formfields'
 
@@ -96,14 +97,39 @@ class Signin extends Component {
         })
 
         if (type){
-          console.log('Log in')
+          firebase.auth()
+          .signInWithEmailAndPassword(dataToSubmit.email, dataToSubmit.password)
+          .then(() => {
+            this.props.history.push('/')  //redirect user to home
+          })
+          .catch(err => {
+            this.setState({
+              loading: false,
+              registerError: err.message
+            })
+          })
         }
         else {
-          console.log('Register')
+          firebase.auth()
+          .createUserWithEmailAndPassword(dataToSubmit.email, dataToSubmit.password)
+          .then(() => {
+            this.props.history.push('/')  //redirect user to home
+          })
+          .catch(err => {
+            this.setState({
+              loading: false,
+              registerError: err.message
+            })
+          })
         }
       }
     }
   }
+
+  showRegisterError = () => (
+    this.state.registerError !== '' ? <div className={style.error}>{this.state.registerError}</div>
+                                    : ''
+  )
 
   render() {
     return (
@@ -122,6 +148,7 @@ class Signin extends Component {
           />
 
           {this.submitButton()}
+          {this.showRegisterError()}
         </form>
       </div>
     )
