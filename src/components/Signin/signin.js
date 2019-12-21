@@ -17,13 +17,50 @@ class Signin extends Component {
       ...newFormData[element.id]
     }
 
-    newElement.value        = element.event.target.value
+    //capture input from textfield
+    newElement.value = element.event.target.value
+
+    //validate fields on blur
+    if (element.blur){
+      let validData                = this.validate(newElement)
+      newElement.valid             = validData[0]
+      newElement.validationMessage = validData[1]
+    }
+
+    newElement.touched      = element.blur
     newFormData[element.id] = newElement
 
     this.setState({
       formdata: newFormData
     })
 
+  }
+
+  //validate input data
+  validate = (element) => {
+    let error = [true, '']
+
+    //TODO move to signintemplate as rules per element
+    if(element.validation.email){
+      const rx      = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-z]{2,3}/
+      const valid   = rx.test(element.value)
+      const message = `${!valid ? 'Not a valid email' : ''}`
+      error         = !valid ? [valid, message] : error
+    }
+
+    if(element.validation.password){
+      const valid   = element.value.length >= 5
+      const message = `${!valid ? 'Must be greater than 5' : ''}`
+      error         = !valid ? [valid, message] : error
+    }
+
+    if(element.validation.required){
+      const valid   = element.value.trim() !== ''
+      const message = `${!valid ? 'This field is required' : ''}`
+      error         = !valid ? [valid, message] : error
+    }
+
+    return error
   }
 
   render() {

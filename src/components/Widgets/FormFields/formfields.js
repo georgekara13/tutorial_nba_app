@@ -3,6 +3,19 @@ import style from './formfields.module.css'
 
 const FormFields = ({formdata, change, id}) => {
 
+  const showErrorMsg = () => {
+    let errorMsg = null
+
+    if(formdata.validation && !formdata.valid){
+      errorMsg = (
+        <div className = {style.labelError}>
+          {formdata.validationMessage}
+        </div>
+      )
+    }
+    return errorMsg
+  }
+
   const renderTemplate = () => {
 
     let formtemplate = null
@@ -17,6 +30,7 @@ const FormFields = ({formdata, change, id}) => {
               onBlur={(event) => change({event,id,blur:true})}
               onChange={(event) => change({event,id,blur:false})}
             />
+            {showErrorMsg()}
           </div>
         )
         break
