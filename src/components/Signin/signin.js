@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import style from './signin.module.css'
 import SignInTemplate from './signintemplate.json'
+import ReactLoading from 'react-loading';
 import { firebase } from '../../firebase/firebase'
 
 import FormFields from '../Widgets/FormFields/formfields'
@@ -65,7 +66,7 @@ class Signin extends Component {
   }
 
   submitButton = () => (
-    this.state.loading ? 'loading...'
+    this.state.loading ? <ReactLoading type={'spin'} color={'#03a9f4'} height={167} width={75} />
                        : <div>
                             <button onClick={(event) => this.submitForm(event,false)}>Sign up</button>
                             <button onClick={(event) => this.submitForm(event,true)}>Sign in</button>
