@@ -1,0 +1,36 @@
+{
+  "postError":"",
+  "loading":false,
+  "formdata":{
+    "author": {
+      "element":"input",
+      "value":"",
+      "config": {
+        "name":"author_input",
+        "type":"author",
+        "placeholder":"Enter your name"
+      },
+      "validation": {
+        "required": true
+      },
+      "valid": false,
+      "touched": false,
+      "validationMessage":""
+    },
+    "title": {
+      "element":"input",
+      "value":"",
+      "config": {
+        "name":"title_input",
+        "type":"title",
+        "placeholder":"Enter post title"
+      },
+      "validation": {
+        "required": true
+      },
+      "valid": false,
+      "touched": false,
+      "validationMessage":""
+    }
+  }
+}
