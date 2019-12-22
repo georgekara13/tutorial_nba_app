@@ -3,6 +3,7 @@ import ReactLoading from 'react-loading';
 import FormFields from '../Widgets/FormFields/formfields'
 import config from './config.json'
 import style from './dashboard.module.css'
+import { firebaseTeams } from '../../firebase/firebase'
 
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
@@ -13,8 +14,35 @@ class Dahboard extends Component {
   state = {
     editorState: EditorState.createEmpty(),
     ...config
-}
-  updateForm = (element) => {
+  }
+
+  componentDidMount(){
+    this.loadTeams()
+  }
+
+  loadTeams = () => {
+    firebaseTeams.once('value')
+    .then((snapshot) => {
+      let teams = []
+      snapshot.forEach((childSnapshot) => {
+        teams.push({
+          id: childSnapshot.val().teamId,
+          name: childSnapshot.val().city
+        })
+      })
+      const newFormData = {...this.state.formdata}
+      const newElement  = {...newFormData['team']}
+
+      newElement.config.options = teams
+      newFormData['team'] = newElement
+
+      this.setState({
+        formdata: newFormData
+      })
+    })
+  }
+
+  updateForm = (element, content = "") => {
     const newFormData = {
       ...this.state.formdata
     }
@@ -23,8 +51,13 @@ class Dahboard extends Component {
       ...newFormData[element.id]
     }
 
-    //capture input from textfield
-    newElement.value = element.event.target.value
+    if(content === ""){
+      //capture input from textfield
+      newElement.value = element.event.target.value
+    }
+    else {
+      newElement.value = content
+    }
 
     //validate fields on blur
     if (element.blur){
@@ -103,6 +136,8 @@ class Dahboard extends Component {
     //convert json contents of wysiwyg editor to raw html
     let html = stateToHTML(contentState)
 
+    this.updateForm({id: 'body'},html)
+
     this.setState({
       editorState
     })
@@ -133,6 +168,13 @@ class Dahboard extends Component {
             wrapperClassName = "myEditor-wrapper"
             editorClassName = "myEditor-editor"
             onEditorStateChange = {this.onEditorStateChange}
+          />
+
+          Team
+          <FormFields
+            id={'team'}
+            formdata={this.state.formdata.team}
+            change={(element) => this.updateForm(element)}
           />
 
           {this.submitButton()}

@@ -31,6 +31,22 @@
       "valid": false,
       "touched": false,
       "validationMessage":""
+    },
+    "body": {
+      "element":"texteditor",
+      "value": "",
+      "valid": true
+    },
+    "team": {
+      "element":"select",
+      "value":"",
+      "config": {
+        "name":"team_input",
+        "options": []
+      },
+      "validation": {
+        "required": true
+      }
     }
   }
 }
