@@ -61,6 +61,11 @@ class Dahboard extends Component {
       newElement.value = content
     }
 
+    //split tags input into array elements
+    if (element.id === 'tags'){
+      newElement.value = newElement.value.split(',')
+    }
+
     //validate fields on blur
     if (element.blur){
       let validData                = this.validate(newElement)
@@ -179,6 +184,13 @@ class Dahboard extends Component {
             wrapperClassName = "myEditor-wrapper"
             editorClassName = "myEditor-editor"
             onEditorStateChange = {this.onEditorStateChange}
+          />
+
+          Tags
+          <FormFields
+            id={'tags'}
+            formdata={this.state.formdata.tags}
+            change={(element) => this.updateForm(element)}
           />
 
           Team

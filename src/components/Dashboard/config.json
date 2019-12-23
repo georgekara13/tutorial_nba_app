@@ -52,6 +52,19 @@
       "element":"image",
       "value": "",
       "valid": true
+    },
+    "tags": {
+      "element":"input",
+      "value":[],
+      "config": {
+        "name":"tags_input",
+        "type":"tags",
+        "placeholder":"Enter some comma separated tags"
+      },
+      "validation": {
+        "required": false
+      },
+      "valid": true
     }
   }
 }
