@@ -11,6 +11,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-draft-wysiwyg": "^1.14.1",
+    "react-firebase-file-uploader": "^2.4.3",
     "react-fontawesome": "^1.7.1",
     "react-loading": "^2.0.3",
     "react-router-dom": "^5.1.2",

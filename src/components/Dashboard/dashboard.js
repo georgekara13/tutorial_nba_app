@@ -9,6 +9,8 @@ import { Editor } from 'react-draft-wysiwyg'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 
+import Uploader from '../Widgets/FileUploader/fileuploader'
+
 class Dahboard extends Component {
 
   state = {
@@ -148,6 +150,8 @@ class Dahboard extends Component {
       <div className={style.postContainer}>
         <form onSubmit={this.submitForm}>
           <h2>Add post</h2>
+
+          <Uploader />
 
           Author
           <FormFields
