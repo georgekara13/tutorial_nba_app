@@ -47,6 +47,11 @@
       "validation": {
         "required": true
       }
+    },
+    "image": {
+      "element":"image",
+      "value": "",
+      "valid": true
     }
   }
 }

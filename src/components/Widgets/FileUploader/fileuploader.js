@@ -27,7 +27,10 @@ class Uploader extends Component {
   }
 
   handleUploadSuccess = (filename) => {
-    console.log(filename)
+
+    //pass filename to parent component through props
+    this.props.filename(filename)
+
     this.setState({
       name: filename,
       progress: 100,
@@ -63,6 +66,13 @@ class Uploader extends Component {
           onUploadSuccess={this.handleUploadSuccess}
           onProgress={this.handleProgress}
         />
+
+        { this.state.isUploading ? <p>Progress: {this.state.progress}</p>
+                                 : null }
+
+        { this.state.fileUrl ? <img style = {{width: '300px'}} src={this.state.fileUrl}/>
+                             : null }
+
       </div>
     )
   }

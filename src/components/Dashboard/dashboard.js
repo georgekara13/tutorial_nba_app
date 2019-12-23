@@ -145,13 +145,20 @@ class Dahboard extends Component {
     })
   }
 
+  //get filename from Uploader component
+  storeFileName = (filename) => {
+    this.updateForm({id: 'image'},filename)
+  }
+
   render() {
     return (
       <div className={style.postContainer}>
         <form onSubmit={this.submitForm}>
           <h2>Add post</h2>
 
-          <Uploader />
+          <Uploader
+            filename={ (filename) => this.storeFileName(filename) }
+          />
 
           Author
           <FormFields
