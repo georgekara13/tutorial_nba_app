@@ -11,18 +11,21 @@ import VideoView from './components/Articles/Videos/videoview.js'
 import Signin from './components/Signin/signin'
 import Dashboard from './components/Dashboard/dashboard'
 
+import PrivateRoute from './components/AuthRoutes/privateroute'
+import PublicRoute from './components/AuthRoutes/publicroute'
+
 const Routes = (props) => {
     return (
       //pass user session info to Layout HOC
       <Layout user={props.user}>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/articles/:id" exact component={NewsArticle} />
-          <Route path="/articles" exact component={NewsView} />
-          <Route path="/videos/:id" exact component={VideoArticle} />
-          <Route path="/videos" exact component={VideoView} />
-          <Route path="/sign-in" exact component={Signin} />
-          <Route path="/dashboard" exact component={Dashboard} />
+          <PublicRoute {...props} restricted={false} path="/" exact component={Home} />
+          <PublicRoute {...props} restricted={false} path="/articles/:id" exact component={NewsArticle} />
+          <PublicRoute {...props} restricted={false} path="/articles" exact component={NewsView} />
+          <PublicRoute {...props} restricted={false} path="/videos/:id" exact component={VideoArticle} />
+          <PublicRoute {...props} restricted={false} path="/videos" exact component={VideoView} />
+          <PublicRoute {...props} restricted={true} path="/sign-in" exact component={Signin} />
+          <PrivateRoute {...props} path="/dashboard" exact component={Dashboard} />
         </Switch>
       </Layout>
     )
