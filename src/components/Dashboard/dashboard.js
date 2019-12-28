@@ -3,7 +3,7 @@ import ReactLoading from 'react-loading';
 import FormFields from '../Widgets/FormFields/formfields'
 import config from './config.json'
 import style from './dashboard.module.css'
-import { firebaseTeams } from '../../firebase/firebase'
+import { firebase, firebaseTeams, firebaseArticles } from '../../firebase/firebase'
 
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
@@ -114,7 +114,33 @@ class Dahboard extends Component {
     console.log(dataToSubmit)
 
     if (formIsValid){
-      console.log('is valid')
+      this.setState({
+        loading: true,
+        postError: ''
+      })
+
+      firebaseArticles.orderByChild('id').limitToLast(1).once('value')
+      .then( snapshot => {
+        let articleId = 0
+        snapshot.forEach(childSnapshot => {
+          articleId = childSnapshot.val().id
+        })
+
+        dataToSubmit['date'] = firebase.database.ServerValue.TIMESTAMP
+        dataToSubmit['id']   = articleId + 1
+        dataToSubmit['team'] = parseInt(dataToSubmit['team'])
+
+        firebaseArticles.push(dataToSubmit)
+        .then(article => {
+          //redirect user to article after submitting data
+          this.props.history.push(`/articles/${article.key}`)
+        })
+        .catch( error => {
+          this.setState({
+            postError: error.message
+          })
+        })
+      })
     }
     else{
       this.setState({

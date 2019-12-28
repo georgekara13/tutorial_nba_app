@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import style from '../../articles.module.css'
-import { firebaseDB, firebaseLoopContent, firebaseTeams } from '../../../../firebase/firebase'
+import { firebase, firebaseDB, firebaseLoopContent, firebaseTeams } from '../../../../firebase/firebase'
 
 //components
 import Header from './header'
@@ -9,7 +9,8 @@ class NewsArticles extends Component {
 
   state = {
     article: [],
-    team: []
+    team: [],
+    imageURL: ''
   }
 
   componentDidMount(){
@@ -25,8 +26,25 @@ class NewsArticles extends Component {
           article,
           team
         })
+        //downside setting state twice -> rendering twice
+        this.getImageURL(article.image)
       })
     })
+  }
+
+  getImageURL = (filename) => {
+      firebase.storage().ref('images')
+      .child(filename).getDownloadURL()
+      .then ( url => {
+        this.setState({
+          imageURL: url
+        })
+      })
+      .catch ( e => {
+        this.setState({
+          imageURL: `/images/articles/${this.state.article.image}`
+        })
+      })
   }
 
   render() {
@@ -41,10 +59,10 @@ class NewsArticles extends Component {
           <h1>{article.title}</h1>
           <div className={style.article_image}
                style={{
-                 background: `url('/images/articles/${article.image}')`
+                 background: `url('${this.state.imageURL}')`
                }}
           ></div>
-          <div className={style.article_text}>{article.body}</div>
+          <div className={style.article_text} dangerouslySetInnerHTML={{__html:article.body}} />
         </div>
       </div>
     );
