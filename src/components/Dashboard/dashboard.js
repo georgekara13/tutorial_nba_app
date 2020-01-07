@@ -6,7 +6,7 @@ import style from './dashboard.module.css'
 import { firebase, firebaseTeams, firebaseArticles } from '../../firebase/firebase'
 
 import { Editor } from 'react-draft-wysiwyg'
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
+import { EditorState } from 'draft-js'
 import { stateToHTML } from 'draft-js-export-html'
 
 import Uploader from '../Widgets/FileUploader/fileuploader'
@@ -164,7 +164,6 @@ class Dahboard extends Component {
   onEditorStateChange = (editorState) => {
 
     let contentState = editorState.getCurrentContent()
-    let rawState     = convertToRaw(contentState)
 
     //convert json contents of wysiwyg editor to raw html
     let html = stateToHTML(contentState)
